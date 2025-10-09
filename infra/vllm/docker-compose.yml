@@ -1,0 +1,18 @@
+services:
+  vllm:
+    image: ${VLLM_IMAGE:-vllm/vllm-openai:latest}
+    container_name: vllm-server
+    ports:
+      - "${VLLM_HOST_PORT:-8000}:8000"
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
+    volumes:
+      - ./model-cache:/root/.cache/huggingface
+    command: >
+      python -m vllm.entrypoints.openai.api_server
+      --model ${VLLM_MODEL:-Qwen/Qwen2-VL-2B-Instruct}
+      --device ${VLLM_DEVICE:-cuda}
+      --dtype ${VLLM_DTYPE:-float16}
+      --trust-remote-code
+      --enable-vision
+      ${VLLM_ADDITIONAL_ARGS:-}
