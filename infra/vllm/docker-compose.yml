@@ -9,10 +9,9 @@ services:
     volumes:
       - ./model-cache:/root/.cache/huggingface
     command: >
-      python -m vllm.entrypoints.openai.api_server
-      --model ${VLLM_MODEL:-Qwen/Qwen2-VL-2B-Instruct}
+      vllm serve ${VLLM_MODEL:-Qwen/Qwen2-0.5B-Instruct}
       --device ${VLLM_DEVICE:-cuda}
       --dtype ${VLLM_DTYPE:-float16}
-      --trust-remote-code
       --enable-vision
+      --host 0.0.0.0
       ${VLLM_ADDITIONAL_ARGS:-}
