@@ -4,6 +4,5 @@ export default {
 	// Config options...
 	// Server-side render by default, to enable SPA mode set this to `false`
 	appDirectory: "src/app",
-	serverModuleFormat: "esm",
 	ssr: true,
 } satisfies Config;
