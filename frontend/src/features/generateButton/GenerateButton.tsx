@@ -1,13 +1,14 @@
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
 
 interface GenerateButtonProps {
     onClick: () => void;
+    disabled?: boolean;
 }
-export const GenerateButton = ({ onClick }: GenerateButtonProps) => {
+export const GenerateButton = ({ onClick, disabled = false }: GenerateButtonProps) => {
     return (
-        <button className="btn" onClick={onClick}>
+        <button className="btn" onClick={onClick} disabled={disabled}>
             Generate
-            <FaArrowRight />
+            <FaArrowDown />
         </button>
-    )
+    );
 }

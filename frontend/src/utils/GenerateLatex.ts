@@ -1,29 +1,25 @@
-async function generateLatexByBase64(
-	fileBase64: string,
-	endpoint: string,
-	model: string,
-) {
+import type { ModelConfig } from "src/configs/llm";
+
+async function generateLatexByBase64(fileBase64: string, model: ModelConfig) {
 	const body = {
-		model: model,
+		model: model.model,
 		messages: [
 			{
 				role: "user",
 				content: [
-					{ type: "text", text: "Convert the image to Latex" },
-					// {"type": "image_url", "image_url":  {"url": `data:image${fileBase64}`}}
+					{
+						type: "text",
+						text: "Transcribe the given image to LaTeX. !Important: Output just the latex code without any additional explanations.",
+					},
 					{ type: "image_url", image_url: { url: fileBase64 } },
 				],
 			},
 		],
-		max_tokens: import.meta.env.MAX_TOKENS
-			? parseInt(import.meta.env.MAX_TOKENS, 10)
-			: 256,
-		temperature: import.meta.env.TEMPERATURE
-			? parseFloat(import.meta.env.TEMPERATURE)
-			: 0,
+		max_tokens: model.max_tokens,
+		temperature: model.temperature,
 	};
 
-	const response = await fetch(endpoint, {
+	const response = await fetch(model.endpoint, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -36,7 +32,6 @@ async function generateLatexByBase64(
 	}
 
 	const data = await response.json();
-	console.log("API response data:", data);
 	return data.choices[0].message.content;
 }
 

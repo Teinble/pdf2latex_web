@@ -40,9 +40,17 @@ export const LatexRender = ({ latex }: LaTeXRenderProps) => {
 
     useEffect(() => {
         if (containerRef.current) {
-            katex.render(text, containerRef.current, { throwOnError: false });
+            try {
+                katex.render(text, containerRef.current, { displayMode: true });
+            } catch (e) {
+                containerRef.current.innerText = "Failed to render LaTeX: " + (e as Error).message;
+            }
         }
     }, [text])
+
+    if (!latex) {
+        return <div className='italic opacity-50'>Generated LaTeX will appear here</div>;
+    }
 
     return (
         <div className='space-y-4'>
@@ -58,7 +66,7 @@ export const LatexRender = ({ latex }: LaTeXRenderProps) => {
                     </button>
                 </div>
                 <p className='font-bold'>Raw Latex:</p>
-                <p className='ml-4 italic'>{text}</p>
+                <p className='ml-4 italic wrap-anywhere'>{text}</p>
             </div>
         </div>);
 
