@@ -1,1 +1,1 @@
-export * from './FileUploadInput';
+export * from "./FileUploadInput";

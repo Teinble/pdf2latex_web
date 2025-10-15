@@ -1,1 +1,1 @@
-export { LatexRender } from './LatexRender';
+export { LatexRender } from "./LatexRender";
