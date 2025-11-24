@@ -3,7 +3,7 @@ const DEFAULT_TEMP = import.meta.env.TEMPERATURE
 	: 0;
 const DEFAULT_MAX_TOKENS = import.meta.env.MAX_TOKENS
 	? parseInt(import.meta.env.MAX_TOKENS, 10)
-	: 256;
+	: 1024;
 
 export interface ModelConfig {
 	id: string;

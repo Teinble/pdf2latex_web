@@ -24,7 +24,7 @@ export function preProcessLatex(input: string): string {
     s = s.replace(/^\s*\$\$\s*|\s*\$\$\s*$/g, "");
 
     // 2) Unwrap \big{(} → ( and \big{)} → ) (and Big/bigg/Bigg)
-    s = s.replace(/\\(?:big|Big|bigg|Bigg)\s*\{\s*([()])\s*\}/g, "$1");
+    s = s.replace(/\\(?:big|Big|bigg|Bigg)\s*\{\s*([^{}]*?)\s*\}/g, "$1");
 
     // 3) Remove a trailing solitary backslash (common when copy-pasting)
     s = s.replace(/\\\s*$/g, "");
@@ -54,7 +54,7 @@ export const LatexRender = ({ latex }: LaTeXRenderProps) => {
 
     return (
         <div className='space-y-4'>
-            <div className='border p-2 bg-gray-300 rounded-md'>
+            <div className='border p-2 bg-gray-300 rounded-md overflow-scroll'>
                 <p className='font-bold'>Compiled Latex:</p>
                 <div className="ml-4" id="latex_container" ref={containerRef} />
             </div>
